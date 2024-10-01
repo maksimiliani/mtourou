@@ -2,6 +2,7 @@ const frames_p = 60;
 const cntnr_class = '.container.portfolio';
 const cntnr_id = 'container';
 const switch_opacity = true; // if switched then opacity applies to an element
+const cell_scale = 20;
 
 let nIntervId;
 let startValue, endValue, aniimation_time;
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 });
 
-function expandCell(target, double_click = true, scale = "15") {
+function expandCell(target, double_click = true, scale = `${cell_scale}`) {
   if ((cell.lastTriggered == target.target) && !double_click) return;
   if (beforeopenmap.col == "") {
     for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector(cntnr_class), null)["grid-template-columns"], "px"); i++) {
