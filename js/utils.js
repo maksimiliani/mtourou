@@ -11,7 +11,7 @@ function easeInOutQuad(x) {
 return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
 
-function getStringCount(string, lookfor) {;
+function getStringCount(string, lookfor) {
     return string.match(new RegExp(lookfor, 'g')).length
 }
 
