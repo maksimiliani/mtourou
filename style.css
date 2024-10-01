@@ -3,7 +3,7 @@
     --color-white: #fff;
     --color-grey: #E8EBF1;
     --color-accent: #FF7A00;
-    --cell-width: 10vw;
+    --cell-width: 9vw;
     --cell-width2: calc((100vw - 40px) / 10vw);
     box-sizing: border-box;
   }
@@ -23,7 +23,7 @@
   
   .container.portfolio {
     display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(var(--cell-width2), 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(var(--cell-width), 1fr));
     grid-template-rows: repeat(auto-fill, 10px, 1fr));
         gap: 0px;
     height: 100vh;
