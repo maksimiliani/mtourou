@@ -1,4 +1,7 @@
 const frames_p = 60;
+const cntnr_class = '.container.portfolio';
+const cntnr_id = 'container';
+const switch_opacity = true; // if switched then opacity applies to an element
 
 let nIntervId;
 let startValue, endValue, aniimation_time;
@@ -18,20 +21,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   if (cell_tmp.col == "") {
-    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector('.container'), null)["grid-template-columns"], "px"); i++) {
+    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector(cntnr_class), null)["grid-template-columns"], "px"); i++) {
       cell_tmp.col += '1fr ';
     }
-    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector('.container'), null)["grid-template-rows"], "px"); i++) {
+    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector(cntnr_class), null)["grid-template-rows"], "px"); i++) {
       cell_tmp.row += '1fr ';
     }
     oldmap = cell_tmp;
-    document.querySelector('.container').style.gridTemplateColumns = oldmap.col;
-    document.querySelector('.container').style.gridTemplateRows = oldmap.row;
+    document.querySelector(cntnr_class).style.gridTemplateColumns = oldmap.col;
+    document.querySelector(cntnr_class).style.gridTemplateRows = oldmap.row;
   }
   
-  document.getElementById('container').addEventListener("mousemove", handleMouseMove);
-  document.getElementById('container').addEventListener("mouseout", handleMouseOut);
-  document.querySelectorAll('.container > div').forEach(item => {
+  document.getElementById(cntnr_id).addEventListener("mousemove", handleMouseMove);
+  document.getElementById(cntnr_id).addEventListener("mouseout", handleMouseOut);
+  document.querySelectorAll(cntnr_class + ' > div').forEach(item => {
     item.addEventListener("mouseenter", handleMouseOver);
     item.addEventListener("click", (e) => {
       expandCell(e);
@@ -51,10 +54,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 function expandCell(target, double_click = true, scale = "15") {
   if ((cell.lastTriggered == target.target) && !double_click) return;
   if (beforeopenmap.col == "") {
-    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector('.container'), null)["grid-template-columns"], "px"); i++) {
+    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector(cntnr_class), null)["grid-template-columns"], "px"); i++) {
       beforeopenmap.col += '1fr ';
     }
-    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector('.container'), null)["grid-template-rows"], "px"); i++) {
+    for (let i = 1; i <= getStringCount(window.getComputedStyle(document.querySelector(cntnr_class), null)["grid-template-rows"], "px"); i++) {
       beforeopenmap.row += '1fr ';
     }
     oldmap = beforeopenmap;
@@ -79,13 +82,13 @@ function expandCell(target, double_click = true, scale = "15") {
   }
   
     if ((newmap.col == oldmap.col) && (newmap.row == oldmap.row) && double_click) {
-      document.querySelector('.container').style.gridTemplateColumns = beforeopenmap.col;
-      document.querySelector('.container').style.gridTemplateRows = beforeopenmap.row;
+      document.querySelector(cntnr_class).style.gridTemplateColumns = beforeopenmap.col;
+      document.querySelector(cntnr_class).style.gridTemplateRows = beforeopenmap.row;
       beforeopenmap.col = "";
       beforeopenmap.row = "";
     } else {
-      document.querySelector('.container').style.gridTemplateColumns = newmap.col;
-      document.querySelector('.container').style.gridTemplateRows = newmap.row;
+      document.querySelector(cntnr_class).style.gridTemplateColumns = newmap.col;
+      document.querySelector(cntnr_class).style.gridTemplateRows = newmap.row;
       beforeopenmap = oldmap;
     }
 
@@ -104,12 +107,17 @@ function animate() {
 
   // Calculate deducted value with ease effect
   let deductedValue = deductWithValueEase(startValue, endValue, aniimation_time.duration, aniimation_time.currentTime);
-  document.querySelectorAll('.container > div').forEach(item => {
+  document.querySelectorAll(cntnr_class + ' > div').forEach(item => {
     let itemRect = item.getBoundingClientRect();
     let dx = deductedValue.x - itemRect.x;
     let dy = deductedValue.y - itemRect.y;
     let opacity = calculateOpacity(Math.sqrt(dx * dx + dy * dy));
-    item.style.backgroundColor = `rgba(255, 122, 0, ${opacity})`;
+    if (switch_opacity) {
+      item.style.backgroundColor = `rgba(255, 122, 0)`;
+      item.style.opacity = opacity;
+    } else {
+      item.style.backgroundColor = `rgba(255, 122, 0, ${opacity})`;
+    }
   });
   // Check if the animation is still in progress
   if (aniimation_time.currentTime >= aniimation_time.duration) {
@@ -132,14 +140,14 @@ function deductWithValueEase(startValue, endValue, duration, currentTime) {
     }
 
     function handleMouseOut(event) {
-      document.querySelector('.container').style.gridTemplateColumns = cell_tmp.col;
-      document.querySelector('.container').style.gridTemplateRows = cell_tmp.row;
+      document.querySelector(cntnr_class).style.gridTemplateColumns = cell_tmp.col;
+      document.querySelector(cntnr_class).style.gridTemplateRows = cell_tmp.row;
       cell.lastTriggered = null;
     }
 
     function updateRoundedCorners() {
-      let gridItems = document.querySelectorAll('.container > div');
-      let containerRect = document.getElementById('container').getBoundingClientRect();
+      let gridItems = document.querySelectorAll(cntnr_class + ' > div');
+      let containerRect = document.getElementById(cntnr_id).getBoundingClientRect();
 
       gridItems.forEach(item => {
         let roundedCornersX = (cursorX - containerRect.left) / containerRect.width * 100 + '%';
@@ -151,10 +159,15 @@ function deductWithValueEase(startValue, endValue, duration, currentTime) {
     function handleMouseOver(e) {
       animation_interrupted = true;
 
-      document.querySelectorAll('.container > div').forEach(item => {
+      document.querySelectorAll(cntnr_class + ' > div').forEach(item => {
         let distance = calculateDistance(e.target, item);
         let opacity = calculateOpacity(distance);
-        item.style.backgroundColor = `rgba(255, 122, 0, ${opacity})`;
+        if (switch_opacity) {
+          item.style.backgroundColor = `rgba(255, 122, 0)`;
+          item.style.opacity = opacity;
+        } else {
+          item.style.backgroundColor = `rgba(255, 122, 0, ${opacity})`;
+        }
       });
 
       expandCell(e, false, "1.2");
