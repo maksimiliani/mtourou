@@ -4,7 +4,7 @@
     --color-grey: #E8EBF1;
     --color-accent: #FF7A00;
     --cell-width: 10vw;
-    --cell-width2: calc(10vw/3);
+    --cell-width2: calc((100vw - 40px) / 10 vw);
     box-sizing: border-box;
   }
   
