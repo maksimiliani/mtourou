@@ -6,14 +6,13 @@
   <title>Budgeting App</title>
 </head>
 <body>
-  <h1>Google Sheets Data</h1>
   <div id="sheet-data"></div>
 
   <script>
     // Replace with your actual spreadsheet ID and API Key
     const spreadsheetId = '1Pnvs5qEDF3qtGs8UoT45v3XoRrbJSZdvrqYw6WOn7eE';
     const apiKey = 'AIzaSyBrMFxEH3bCkcpJR3xFEff86HzLoyXGAg8';
-    const range = 'NowLiqCig!J14:J22'; // Adjust range based on your sheet
+    const range = 'Now Liq+Cig'; // Adjust range based on your sheet
 
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
 
@@ -23,17 +22,25 @@
         // Process and display the data
         const values = data.values;
         if (values) {
-          const table = document.createElement('table');
-          values.forEach(row => {
-            const tr = document.createElement('tr');
-            row.forEach(cell => {
-              const td = document.createElement('td');
-              td.textContent = cell;
-              tr.appendChild(td);
-            });
-            table.appendChild(tr);
-          });
-          document.getElementById('sheet-data').appendChild(table);
+
+            let alldata = [
+                { title: 'Liq', value: values[13, 9] },
+                { title: 'Cig', value: values[14, 9] },
+                { title: 'IQOS', value: values[15, 9] },
+                { title: 'Uber', value: values[19, 9] },
+                { title: 'Groc', value: values[20, 9] }
+            ];
+            for (let i = 0; i < alldata.length; i++) {
+                let div = document.createElement('div');
+                let h2 = document.createElement('h2');
+                let p = document.createElement('p');
+                h2.innerHTML = alldata[i].title;
+                p.innerHTML = alldata[i].value;
+                h2.appendChild(p);
+                div.appendChild(h2);
+                document.getElementById('sheet-data').appendChild(div);
+            }
+
         } else {
           document.getElementById('sheet-data').textContent = 'No data found.';
         }
