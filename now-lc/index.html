@@ -1,22 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-scheme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Budgeting App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
   <style>
     html {font-size: 100%;}
-    body {font-size: 1rem; transition: all 0.15s ease-in-out; margin: 0; padding: 0;}
+    body {font-size: 1rem; transition: all 0.15s ease-in-out; margin: 0; padding: 0; font-family: "Space Grotesk", serif; font-optical-sizing: auto; font-weight: 400; font-style: normal;}
     #sheet-data {display: flex; flex-direction: row;}
-    #sheet-data div {display: flex; flex-direction: column;}
+    #sheet-data div {display: flex; flex-direction: column; text-align: center; align-items: center;}
     #sheet-data h2 {font-size: clamp(2rem, calc(2rem + 2vw), 3rem);}
-    #sheet-data p {font-size: clamp(5rem, calc(5rem + 5vw), 8rem);}
+    #sheet-data p {font-size: clamp(5rem, calc(5rem + 5vw), 8rem); font-weight: 700;}
+
+    [data-scheme=light] body {
+        background: white;
+        color: rgb(45, 45, 45);
+    }
+
+    [data-scheme=dark] body {
+        background: rgb(45, 45, 45);
+        color: rgb(220, 220, 220);
+    }
   </style>
 </head>
 <body>
   <div id="sheet-data"></div>
 
   <script>
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").setAttribute("data-scheme", "dark");
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        document.querySelector("html").setAttribute("data-scheme", event.matches ? "dark" : "light");
+    });
+
+
     // Replace with your actual spreadsheet ID and API Key
     const spreadsheetId = '1Pnvs5qEDF3qtGs8UoT45v3XoRrbJSZdvrqYw6WOn7eE';
     const apiKey = 'AIzaSyBrMFxEH3bCkcpJR3xFEff86HzLoyXGAg8';
