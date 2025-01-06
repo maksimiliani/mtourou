@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Budgeting App</title>
+  <style>
+    html {font-size: 100%;}
+    body {font-size: 1rem; transition: all 0.15s ease-in-out; margin: 0; padding: 0;}
+    #sheet-data {display: flex; flex-direction: row;}
+    #sheet-data div {display: flex; flex-direction: column;}
+    #sheet-data h2 {font-size: clamp(2rem, calc(2rem + 2vw), 3rem);}
+    #sheet-data p {font-size: clamp(5rem, calc(5rem + 5vw), 8rem);}
+  </style>
 </head>
 <body>
   <div id="sheet-data"></div>
