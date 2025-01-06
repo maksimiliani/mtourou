@@ -10,10 +10,10 @@
   <style>
     html {font-size: 100%;}
     body {font-size: 1rem; transition: all 0.15s ease-in-out; margin: 0; padding: 0; font-family: "Space Grotesk", serif; font-optical-sizing: auto; font-weight: 300; font-style: normal; min-height: 100vh;}
-    #sheet-data {display: flex; flex-direction: row; justify-content: space-around; align-items: stretch; height: 100vh;}
-    #sheet-data div {display: flex; flex-direction: column; text-align: center; justify-content: center;}
-    #sheet-data h2 {font-size: clamp(1.5rem, calc(1.5rem + 2vw), 2rem); margin: 0;}
-    #sheet-data p {font-size: clamp(5rem, calc(5rem + 5vw), 8rem); font-weight: 700; margin: 0;}
+    .data {display: flex; flex-direction: row; justify-content: space-around; align-items: stretch; height: 100vh;}
+    .data div {display: flex; flex-direction: column; text-align: center; justify-content: center;}
+    .data h2 {font-size: clamp(1.5rem, calc(1.5rem + 2vw), 2rem); margin: 0;}
+    .data p {font-size: clamp(5rem, calc(5rem + 5vw), 8rem); font-weight: 700; margin: 0;}
 
     [data-scheme=light] body {
         background: white;
@@ -31,7 +31,8 @@
   </style>
 </head>
 <body>
-  <div id="sheet-data"></div>
+  <div id="sheet-data" class="data"></div>
+  <div id="savings" class="data"></div>
 
   <script>
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -58,13 +59,14 @@
         if (values) {
 
             let alldata = [
-                { title: 'Liq', value: values[13][9] },
-                { title: 'Cig', value: values[14][9] },
-                { title: 'IQOS', value: values[15][9] },
-                { title: 'Uber', value: values[19][9] },
-                { title: 'Groc', value: values[20][9] }
+                { title: 'Liq', value: values[14][9] },
+                { title: 'Cig', value: values[15][9] },
+                { title: 'IQOS', value: values[16][9] },
+                { title: 'Uber', value: values[20][9] },
+                { title: 'Groc', value: values[21][9] },
+                { title: 'Savings', value: values[24][9] }
             ];
-            for (let i = 0; i < alldata.length; i++) {
+            for (let i = 0; i < (alldata.length - 1); i++) {
                 let div = document.createElement('div');
                 let h2 = document.createElement('h2');
                 let p = document.createElement('p');
@@ -74,6 +76,14 @@
                 div.appendChild(p);
                 document.getElementById('sheet-data').appendChild(div);
             }
+            let div = document.createElement('div');
+            let h2 = document.createElement('h2');
+            let p = document.createElement('p');
+            h2.innerHTML = alldata[5].title;
+            p.innerHTML = alldata[5].value;
+            div.appendChild(h2);
+            div.appendChild(p);
+            document.getElementById('savings').appendChild(div);
 
         } else {
           document.getElementById('sheet-data').textContent = 'No data found.';
