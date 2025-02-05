@@ -50,6 +50,7 @@
     const range = `NowLiqCig`; // Adjust range based on your sheet
 
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+    let curr_month = new Date().getMonth() + 9;
 
     fetch(url)
       .then(response => response.json())
@@ -59,12 +60,12 @@
         if (values) {
 
             let alldata = [
-                { title: 'Liq', value: values[14][9] },
-                { title: 'Cig', value: values[15][9] },
-                { title: 'IQOS', value: values[16][9] },
-                { title: 'Uber', value: values[20][9] },
-                { title: 'Groc', value: values[21][9] },
-                { title: 'Savings', value: values[24][9] }
+                { title: 'Liq', value: values[14][curr_month] },
+                { title: 'Cig', value: values[15][curr_month] },
+                { title: 'IQOS', value: values[16][curr_month] },
+                { title: 'Uber', value: values[20][curr_month] },
+                { title: 'Groc', value: values[21][curr_month] },
+                { title: 'Savings', value: values[24][curr_month] }
             ];
             for (let i = 0; i < (alldata.length - 1); i++) {
                 let div = document.createElement('div');
