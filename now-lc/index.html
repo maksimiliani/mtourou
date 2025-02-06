@@ -60,12 +60,12 @@
         if (values) {
 
             let alldata = [
-                { title: 'Liq', value: values[14][curr_month] },
-                { title: 'Cig', value: values[15][curr_month] },
-                { title: 'IQOS', value: values[16][curr_month] },
-                { title: 'Uber', value: values[20][curr_month] },
-                { title: 'Groc', value: values[21][curr_month] },
-                { title: 'Savings', value: values[24][curr_month] }
+                { title: values[14][0], value: values[14][curr_month] },
+                { title: values[15][0], value: values[15][curr_month] },
+                { title: values[16][0], value: values[16][curr_month] },
+                { title: values[20][0], value: values[20][curr_month] },
+                { title: values[21][0], value: values[21][curr_month] },
+                { title: values[24][0], value: values[24][curr_month] }
             ];
             for (let i = 0; i < (alldata.length - 1); i++) {
                 let div = document.createElement('div');
