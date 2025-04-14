@@ -50,7 +50,7 @@
     const range = `NowLiqCig`; // Adjust range based on your sheet
 
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
-    let curr_month = new Date().getMonth() + 9;
+    let curr_month = new Date().getMonth() + 10;
 
     fetch(url)
       .then(response => response.json())
